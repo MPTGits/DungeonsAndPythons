@@ -4,7 +4,7 @@ import string
 VOWELS = "aeiou"
 CONSONANTS = "".join(set(string.ascii_lowercase) - set(VOWELS))
 
-def generate_word(length):
+def genfwefrate_word(length):
     word = ""
     for i in range(length):
         if i % 2 == 0:
