@@ -1,18 +1,6 @@
 import random
-import string
+from random_name_generator import generate_word,CONSONANTS,VOWELS
 #Random name generrator for enemy mobs 
-VOWELS = "aeiou"
-CONSONANTS = "".join(set(string.ascii_lowercase) - set(VOWELS))
-
-def generate_word(length):
-    word = ""
-    for i in range(length):
-        if i % 2 == 0:
-            word += random.choice(CONSONANTS)
-        else:
-            word += random.choice(VOWELS)
-    return word
-#
 
 
 class Enemy:
@@ -27,7 +15,6 @@ class Enemy:
 
     def __str__(self):
         return "Creature:"+self.name
-
     def get_damage(self):
         return self.damage
 
@@ -63,7 +50,3 @@ class Enemy:
 
 
 
-
-
-
-print(Enemy(20,20,100).attack())
