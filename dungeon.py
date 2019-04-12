@@ -36,14 +36,25 @@ class Dungeon:
 #gives possition of given enemy if it is in the list of enemies
     def get_enemy_position(self,picked_enemy):
         for enemy in self.enemies_list:
-            if enemy==picked_enemy:
-                return(enemy(1),enemy(2))
-    
+            if enemy[0]==picked_enemy:
+                return(enemy[1],enemy[2])
+    #gets a list of all our enemmies on the map
+    def get_list_of_enemies(self):
+        enemy_list=[]
+        for id in range(len(self.enemies_list)-1):
+            enemy_list.append(self.enemies_list[id][0])
+        return enemy_list
+
+
     def set_enemy_position(self,enemy_char,new_x_poss,new_y_poss):
+        dungeon_lst=self.get_dungeon_lst()
         for idx in range(len(self.enemies_list)-1):
-            if self.enemies_list[idx]==enemy_char:
+            if self.enemies_list[idx][0]==enemy_char:
+                dungeon_lst[self.enemies_list[idx][1]][self.enemies_list[idx][2]]='.'
                 self.enemies_list[idx][1]=new_x_poss
                 self.enemies_list[idx][2]=new_y_poss
+                dungeon_lst[new_x_poss][new_y_poss]='E'
+                self.update_file(dungeon_lst)
 
     def get_hero_positon(self):
         return self.hero_position
@@ -147,6 +158,7 @@ class Dungeon:
         elif direction=='left':
             self.check_if_move_is_valid_and_make_it(0,-1)
 
+
     def game_loop(self):
         while True:
             move=input('Input move(w/a/s/d):')
@@ -169,7 +181,7 @@ me=Hero('Marto', 'The God', 99, 99,5)
 view.spawn(me)
 view.game_loop()
 
-
+    
 
 
 # #while True:

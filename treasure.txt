@@ -1,0 +1,2 @@
+Sword 3
+Spear 16
