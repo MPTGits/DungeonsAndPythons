@@ -1,5 +1,5 @@
 import random
-from random_name_generator import generate_word,CONSONANTS,VOWELS
+from random_name_generator import *
 #Random name generrator for enemy mobs 
 
 
@@ -15,6 +15,7 @@ class Enemy:
 
     def __str__(self):
         return "Creature:"+self.name
+    
     def get_damage(self):
         return self.damage
 
@@ -48,5 +49,7 @@ class Enemy:
         if (self.is_alive()):
             self.health=max(0,self.health-damage_taken)
 
+    def __eq__(self,other):
+        return self.health==other.health and self.mana==other.mana and self.damage==other.damage
 
 

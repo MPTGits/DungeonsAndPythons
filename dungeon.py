@@ -1,14 +1,14 @@
 from dungeon_generator import DungeonGenerator
-from hero import Hero,Weapon
+from hero import *
 from random import randint,choice
 from sty import fg, bg, ef, rs
-from spell import Spell
 from enemy import Enemy
 import time
 
 class Dungeon:
 
     def __init__(self,file_name):
+        self.current_lvl=1
         self.file_name=file_name
         self.my_hero=None
         self.hero_position=(-1,-1)
@@ -16,6 +16,18 @@ class Dungeon:
         self.enemies_list=[]
         self.get_treasures()
         self.get_enemies_from_file()
+
+
+#Refreshing mobs and treasures on the new dungeon
+    def refresh_for_new_level(self):
+        self.current_lvl+=1
+        DungeonGenerator(int(20*self.current_lvl/2),20*self.current_lvl,'lvl.txt')
+        self.get_enemies_from_file()
+        self.get_treasures()
+        self.spawn(self.my_hero)
+    
+    def get_current_level(self):
+        return self.current_lvl
 
 #saving the possiable treasures in the list from a file
     def get_treasures(self,treasure_file='treasure.txt'):
@@ -38,29 +50,18 @@ class Dungeon:
         for enemy in self.enemies_list:
             if enemy[0]==picked_enemy:
                 return(enemy[1],enemy[2])
-    #gets a list of all our enemmies on the map
-    def get_list_of_enemies(self):
-        enemy_list=[]
-        for id in range(len(self.enemies_list)-1):
-            enemy_list.append(self.enemies_list[id][0])
-        return enemy_list
-
-
+    
     def set_enemy_position(self,enemy_char,new_x_poss,new_y_poss):
-        dungeon_lst=self.get_dungeon_lst()
         for idx in range(len(self.enemies_list)-1):
-            if self.enemies_list[idx][0]==enemy_char:
-                dungeon_lst[self.enemies_list[idx][1]][self.enemies_list[idx][2]]='.'
+            if self.enemies_list[idx]==enemy_char:
                 self.enemies_list[idx][1]=new_x_poss
                 self.enemies_list[idx][2]=new_y_poss
-                dungeon_lst[new_x_poss][new_y_poss]='E'
-                self.update_file(dungeon_lst)
 
     def get_hero_positon(self):
         return self.hero_position
 #return list of enemies that are in the dungeon
-    def get_enemys(self):
-        result_list
+    def get_enemies(self):
+        result_list = []
         for enemy in self.enemies_list:
             result_list.append(enemy[0])
         return result_list
@@ -125,9 +126,8 @@ class Dungeon:
             for c in range(len(dungeon_lst[0])-1):
                 if dungeon_lst[r][c]=='H':
                     print(r+x,c+y)
-                    if dungeon_lst[r+x][c+x+1] =='G':
-                        DungeonGenerator(37,60,'lvl.txt')
-                        self.spawn(self.my_hero)
+                    if dungeon_lst[r+x][c+y] =='G':
+                        self.refresh_for_new_level()
                         continue
                     if (r+x >=0 and r+x<=len(dungeon_lst)-1) and (c+y>=0 and c+y<=len(dungeon_lst[0])-1) and (dungeon_lst[r+x][c+y]=='.' or dungeon_lst[r+x][c+y]=='T'):
                         dungeon_lst[r][c]='.'
@@ -158,30 +158,77 @@ class Dungeon:
         elif direction=='left':
             self.check_if_move_is_valid_and_make_it(0,-1)
 
+# check if the hero can attack by weapon and spell, not tested
+    def hero_attack(self, by=""):
+        if by == "weapon":
+            # if self.my_hero.can_attack_by_weapon() is False:
+            #     return False
+            for enemy in self.get_enemies():
+                if self.get_hero_positon() == self.get_enemy_position(enemy):
+                    return enemy
+            return False
+        else:
+            for enemy in self.get_enemies():
+                if self.get_hero_positon() == self.get_enemy_position(enemy):
+                    return enemy
+            cast_range = self.my_hero.spell.get_cast_range()
+            dungeon_lst = self.get_dungeon_lst()
+            rows_hero = self.hero_position[0]
+            col_hero = self.hero_position[1]
+            right = (rows_hero, col_hero + cast_range)
+            left = (rows_hero, col_hero - cast_range)
+            up = (rows_hero - cast_range, col_hero)
+            down = (rows_hero + cast_range, col_hero)
+            for enemy in self.get_enemies():
+                enemy_pos = self.get_enemy_position(enemy)
+                if enemy_pos[0] == right[0] and enemy_pos[1] <= right[1] and enemy_pos[1] >= col_hero:
+                    return enemy
+                if enemy_pos[0] == left[0] and enemy_pos[1] >= left[1] and enemy_pos[1] <= col_hero:
+                    return enemy
+                if enemy_pos[1] == up[1] and enemy_pos[0] >= up[0] and enemy_pos[0] <= rows_hero:
+                    return enemy
+                if enemy_pos[1] == down[1] and enemy_pos[0] <= down[0] and enemy_pos[0] >= rows_hero:
+                    return enemy
+            return False
 
-    def game_loop(self):
-        while True:
-            move=input('Input move(w/a/s/d):')
-            if move=='w':
-                self.move_hero('up')
-            elif move=='s':
-                self.move_hero('down')
-            elif move=='a':
-                self.move_hero('left')
-            elif move=='d':
-                self.move_hero('right')
-            self.print_map()
+
+    def enemy_attack(self, enemy):
+        if self.get_hero_positon() == get_enemy_position(enemy):
+            return True
+    #     else:
+            # moves closer to hero
+
 
 
 #This is the way to save our dungeon to a file with our dungeon generator(by only calling the class with height and width of map and a file
 #to save it to
-DungeonGenerator(37,60,'lvl.txt')
-view=Dungeon('lvl.txt')
-me=Hero('Marto', 'The God', 99, 99,5)
-view.spawn(me)
-view.game_loop()
+# DungeonGenerator(37,60,'lvl.txt')
+# view=Dungeon('lvl.txt')
+# me=Hero('Marto', 'The God', 99, 99,5)
+# view.spawn(me)
+# view.game_loop()
 
-    
+# # view.game_loop()
+
+
+#     def game_loop(dungeon):
+#         while True:
+#             move=input('Input move(w/a/s/d):')
+#             if move=='w':
+#                 dungeon.move_hero('up')
+#             elif move=='s':
+#                 dungeon.move_hero('down')
+#             elif move=='a':
+#                 dungeon.move_hero('left')
+#             elif move=='d':
+#                 dungeon.move_hero('right')
+#             dungeon.print_map()
+    #         view.get_hero_positon()
+    #         print("something")
+    #         for enemy in view.get_enemies():
+    # # print(enemy)
+    #             print(view.get_enemy_position(enemy))
+
 
 
 # #while True:

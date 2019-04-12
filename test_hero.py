@@ -7,14 +7,14 @@ class TestHero(unittest.TestCase):
 
     def test_hero_init(self):
         test_weapon = Weapon("",0)
-        self.assertEqual(self.hero._name,"Bron")
-        self.assertEqual(self.hero._title, "Dragonslayer")
-        self.assertEqual(self.hero._health, 100)
-        self.assertEqual(self.hero._mana, 100)
-        self.assertEqual(self.hero._mana_regeneration_rate, 2)
-        self.assertEqual(self.hero._max_health, 100)
-        self.assertEqual(self.hero._max_mana, 100)
-        self.assertEqual(self.hero._weapon, test_weapon)
+        self.assertEqual(self.hero.name,"Bron")
+        self.assertEqual(self.hero.title, "Dragonslayer")
+        self.assertEqual(self.hero.health, 100)
+        self.assertEqual(self.hero.mana, 100)
+        self.assertEqual(self.hero.mana_regeneration_rate, 2)
+        self.assertEqual(self.hero.max_health, 100)
+        self.assertEqual(self.hero.max_mana, 100)
+        self.assertEqual(self.hero.weapon, test_weapon)
 
     def test_hero_known_as(self):
         self.assertEqual(self.hero.known_as(), "Bron the Dragonslayer")
@@ -51,15 +51,15 @@ class TestHero(unittest.TestCase):
 
     def test_use_mana(self):
         self.assertEqual(self.hero.use_mana(50), True)
-        self.assertEqual(self.hero._mana, 50)
+        self.assertEqual(self.hero.mana, 50)
         self.assertEqual(self.hero.use_mana(100), False)
-        self.assertEqual(self.hero._mana, 50)
+        self.assertEqual(self.hero.mana, 50)
 
     def test_take_damage(self):
         self.hero.take_damage(50)
-        self.assertEqual(self.hero._health, 50)
+        self.assertEqual(self.hero.health, 50)
         self.hero.take_damage(100)
-        self.assertEqual(self.hero._health, 0)
+        self.assertEqual(self.hero.health, 0)
 
     def test_take_healing(self):
         self.hero2 = Hero("Bron", "Dragonslayer", 0, 0, 2)
@@ -70,24 +70,24 @@ class TestHero(unittest.TestCase):
 
     def test_take_mana(self):
         self.hero.take_mana()
-        self.assertEqual(self.hero._mana, 100)
+        self.assertEqual(self.hero.mana, 100)
         self.hero.use_mana(50)
         self.hero.take_mana()
-        self.assertEqual(self.hero._mana, 52)
+        self.assertEqual(self.hero.mana, 52)
         self.hero.take_mana(20)
-        self.assertEqual(self.hero._mana, 72)
+        self.assertEqual(self.hero.mana, 72)
         self.hero.take_mana(50)
-        self.assertEqual(self.hero._mana, 100)
+        self.assertEqual(self.hero.mana, 100)
 
     def test_equip(self):
         self.test_weapon = Weapon("Fireball", 100)
         self.hero.equip(self.test_weapon)
-        self.assertEqual(self.hero._weapon, self.test_weapon)
+        self.assertEqual(self.hero.weapon, self.test_weapon)
 
 
 
 
 
 if __name__ == '__main__':
-    unittest.main()
+unittest.main()
 

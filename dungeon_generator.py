@@ -129,7 +129,7 @@ class DungeonGenerator:
                 for c in range(self.width-1):
                     if self.dungeon[self.height-1-r][self.width-1-c]=='.':
                         self.dungeon[self.height-1-r][self.width-1-c]='G'
-                        self.dungeon[self.height-2-r][self.width-1-c]='#'
+                        self.dungeon[self.height-1-r][self.width-2-c]='G'
                         return 
 
 
@@ -152,7 +152,9 @@ class DungeonGenerator:
     #Method that spawns enemies at random places on the map
     def spawn_enemies(self,enemies_file='enemies.txt'):
         with open(enemies_file,'w') as f:
-            enemies=randint(2,5)
+            enemies=randint(4,8)
+            if (self.height<30 or self.width<30):
+                enemies=enemies//2
             while enemies>0:
                 random_x=randint(3,self.height-1)
                 random_y=randint(0,self.width-1)

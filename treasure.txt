@@ -1,2 +1,2 @@
-Sword 3
-Spear 16
+Spear 45
+Necromans spell 15 9 5
