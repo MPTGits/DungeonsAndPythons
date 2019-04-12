@@ -1,0 +1,2 @@
+Necromans spell 20 5 2
+Knife 28

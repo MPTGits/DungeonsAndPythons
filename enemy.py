@@ -15,6 +15,7 @@ class Enemy:
 
     def __str__(self):
         return "Creature:"+self.name
+    
     def get_damage(self):
         return self.damage
 
@@ -47,6 +48,9 @@ class Enemy:
     def take_damage(self,damage_taken):
         if (self.is_alive()):
             self.health=max(0,self.health-damage_taken)
+
+    def __eq__(self,other):
+        return self.health==other.health and self.mana==other.mana and self.damage==other.damage
 
 
 
