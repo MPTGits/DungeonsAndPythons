@@ -51,20 +51,36 @@ class Dungeon:
             if enemy[0]==picked_enemy:
                 return(enemy[1],enemy[2])
     
+    #gets a list of all our enemmies on the map
+    def get_list_of_enemies(self):
+        enemy_list=[]
+        for id in range(len(self.enemies_list)-1):
+            enemy_list.append(self.enemies_list[id][0])
+        return enemy_list
+
+
+
     def set_enemy_position(self,enemy_char,new_x_poss,new_y_poss):
+        dungeon_lst=self.get_dungeon_lst()
         for idx in range(len(self.enemies_list)-1):
+            if self.enemies_list[idx][0]==enemy_char:
+                dungeon_lst[self.enemies_list[idx][1]][self.enemies_list[idx][2]]='.'
             if self.enemies_list[idx]==enemy_char:
                 self.enemies_list[idx][1]=new_x_poss
                 self.enemies_list[idx][2]=new_y_poss
+                dungeon_lst[new_x_poss][new_y_poss]='E'
+                self.update_file(dungeon_lst)
 
     def get_hero_positon(self):
         return self.hero_position
+
 #return list of enemies that are in the dungeon
     def get_enemies(self):
         result_list = []
         for enemy in self.enemies_list:
             result_list.append(enemy[0])
         return result_list
+        
 #refreshes the file with the updates
     def update_file(self,new_list):
         with open(self.file_name,'w') as f:
