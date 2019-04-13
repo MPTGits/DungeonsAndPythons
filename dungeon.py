@@ -68,7 +68,8 @@ class Dungeon:
                 self.enemies_list[idx][1]=new_x_poss
                 self.enemies_list[idx][2]=new_y_poss
                 dungeon_lst[new_x_poss][new_y_poss]='E'
-                self.update_file(dungeon_lst)
+                break
+        self.update_file(dungeon_lst)
 
     def get_hero_positon(self):
         return self.hero_position
