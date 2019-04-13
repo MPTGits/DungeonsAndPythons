@@ -59,7 +59,7 @@ class Hero:
         self.weapon = weapon
 
     def can_attack_by_spell(self):
-        if self.spell.get_mana_cost() <= self.get_mana() and self._spell.get_mana() != 0:
+        if self.spell.get_mana_cost() <= self.get_mana() and self.spell.get_mana_cost() != 0:
             return True
         return False
 
