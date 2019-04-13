@@ -65,7 +65,6 @@ class Dungeon:
         for idx in range(len(self.enemies_list)-1):
             if self.enemies_list[idx][0]==enemy_char:
                 dungeon_lst[self.enemies_list[idx][1]][self.enemies_list[idx][2]]='.'
-            if self.enemies_list[idx]==enemy_char:
                 self.enemies_list[idx][1]=new_x_poss
                 self.enemies_list[idx][2]=new_y_poss
                 dungeon_lst[new_x_poss][new_y_poss]='E'
@@ -80,7 +79,7 @@ class Dungeon:
         for enemy in self.enemies_list:
             result_list.append(enemy[0])
         return result_list
-        
+
 #refreshes the file with the updates
     def update_file(self,new_list):
         with open(self.file_name,'w') as f:
