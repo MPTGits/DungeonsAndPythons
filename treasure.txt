@@ -1,2 +1,2 @@
-Spear 16
-Spear 27
+Necromans spell 9 13 5
+Knife 7

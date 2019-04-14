@@ -73,6 +73,7 @@ class Hero:
         if by == "weapon":
             return self.weapon.get_damage()
         if by == "spell" and self.spell.get_mana_cost() <= self.mana:
+            self.mana-=self.spell.get_mana_cost()
             return self.spell.get_damage()
 
     

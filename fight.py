@@ -1,6 +1,7 @@
 from hero import Hero
 from enemy import Enemy
 from weapon import Weapon
+from dungeon import *
 
 class Fight:
     def __init__(self, hero, enemy):
@@ -22,7 +23,7 @@ class Fight:
         else:
             chosen_attack_damage = 0
         if chosen_attack_damage == 0:
-            print("Hero can't attack, he has no spell and weapon.")
+            print("Hero can't attack, he has no spell and weapon or is out of mana.")
         elif chosen_attack_damage == self.hero.spell.get_damage() and self.hero.can_attack_by_spell():
             self.hero.use_mana(self.hero.spell.get_mana_cost())
             self.enemy.take_damage(chosen_attack_damage)

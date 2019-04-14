@@ -147,7 +147,7 @@ class Dungeon:
                     return True
         return False
     
-
+#Method that does all the checking of the square that the hero is on
     def check_if_move_is_valid_and_make_it(self,x,y):
         dungeon_lst=self.get_dungeon_lst()
         r,c=self.hero_position
@@ -160,7 +160,10 @@ class Dungeon:
             if dungeon_lst[r+x][c+y]=='T':
                 found_item=choice((self.treasure_list))
                 print(str(found_item))
-                self.my_hero.equip(found_item)
+                if isinstance(found_item,Weapon):
+                    self.my_hero.equip(found_item)
+                else:
+                    self.my_hero.learn(found_item)
                 time.sleep(5)
             elif dungeon_lst[r+x][c+y]=='+':
                 potion=HealthPotion(randint(5,15))
