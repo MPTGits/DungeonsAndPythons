@@ -1,9 +1,17 @@
-from dungeon_generator import DungeonGenerator
-from hero import *
-from random import randint,choice
+from random import random,randint,choice
 from sty import fg, bg, ef, rs
+import sys
+from hero import Hero
+from treasure import Treasure
 from enemy import Enemy
+from hero import Weapon
+from spell import Spell
+from health_potion import HealthPotion
+from random import randint,choice
 import time
+from dungeon_generator import DungeonGenerator
+from fight import Fight
+
 
 class Dungeon:
 
@@ -121,6 +129,9 @@ class Dungeon:
                         rows+= fg(88)+bg(88)+dungeon_lst[r][c]+rs.bg
                     elif dungeon_lst[r][c]=='G':
                         rows+= fg(16)+bg(16)+dungeon_lst[r][c]+rs.bg
+                    elif dungeon_lst[r][c]=='+':
+                        rows+=bg(9)+ef.blink+dungeon_lst[r][c]+rs.blink+rs.bg
+
                 print(rows)
 
 
@@ -136,43 +147,68 @@ class Dungeon:
                     return True
         return False
     
+
     def check_if_move_is_valid_and_make_it(self,x,y):
         dungeon_lst=self.get_dungeon_lst()
-        for r in range(len(dungeon_lst)-1):
-            for c in range(len(dungeon_lst[0])-1):
-                if dungeon_lst[r][c]=='H':
-                    print(r+x,c+y)
-                    if dungeon_lst[r+x][c+y] =='G':
-                        self.refresh_for_new_level()
-                        continue
-                    if (r+x >=0 and r+x<=len(dungeon_lst)-1) and (c+y>=0 and c+y<=len(dungeon_lst[0])-1) and (dungeon_lst[r+x][c+y]=='.' or dungeon_lst[r+x][c+y]=='T'):
-                        dungeon_lst[r][c]='.'
-                        if dungeon_lst[r+x][c+y]=='T':
-                            found_item=choice((self.treasure_list))
-                            print(str(found_item))
-                            self.my_hero.equip(found_item)
-                            time.sleep(5)
-                        elif dungeon_lst[r+x][c+y]=='E':
-                            #fight()
-                            pass
-                        dungeon_lst[r+x][c+y]='H'
-                        self.hero_position=(r+x,c+y)
-                        self.update_file(dungeon_lst)
-                        return True
-                    print(dungeon_lst[r+x][c+x])
-        return False
+        r,c=self.hero_position
+        print('Cordinates:',r+x,c+y)
+        if dungeon_lst[r+x][c+y] =='G':
+            self.refresh_for_new_level()
+            return True
+        elif (r+x >=0 and r+x<=len(dungeon_lst)-1) and (c+y>=0 and c+y<=len(dungeon_lst[0])-1) and (dungeon_lst[r+x][c+y]=='.' or dungeon_lst[r+x][c+y]=='T' or dungeon_lst[r+x][c+y]=='+'):
+            dungeon_lst[r][c]='.'
+            if dungeon_lst[r+x][c+y]=='T':
+                found_item=choice((self.treasure_list))
+                print(str(found_item))
+                self.my_hero.equip(found_item)
+                time.sleep(5)
+            elif dungeon_lst[r+x][c+y]=='+':
+                potion=HealthPotion(randint(5,15))
+                print('Hero has reseved a heal of',potion.get_restored_health(),'HP')
+                self.my_hero.take_healing(potion.get_restored_health())
+
+            dungeon_lst[r+x][c+y]='H'
+            self.hero_position=(r+x,c+y)
+            self.update_file(dungeon_lst)
+            return True
+        elif dungeon_lst[r+x][c+y]=='E':
+            for enemy in self.enemies_list:
+                if enemy[1]==x+r and enemy[2]==y+c:
+                    enemy_to_fight=enemy[0]
+            fight_breakout=Fight(self.my_hero,enemy_to_fight)
+            atack_tracker=0
+            while self.my_hero.is_alive() and enemy_to_fight.is_alive():
+                if atack_tracker%2==0:
+                    fight_breakout.attack_by_hero()
+                else:
+                    fight_breakout.attack_by_enemy()
+                atack_tracker+=1
+            if self.my_hero.is_alive():
+                dungeon_lst[r][c]='.'
+                dungeon_lst[r+x][c+y]='H'
+                self.hero_position=(r+x,c+y)
+                self.update_file(dungeon_lst)
+            else:
+                return "Game over"
+            return True
+        #print(dungeon_lst[r+x][c+x])
+        else:
+            return False
 
 
     def move_hero(self,direction):
-        dungeon_lst=self.get_dungeon_lst()
+        is_game_over=False
         if direction=='up':
-            self.check_if_move_is_valid_and_make_it(-1,0)
+            is_game_over=self.check_if_move_is_valid_and_make_it(-1,0)
         elif direction=='down':
-            self.check_if_move_is_valid_and_make_it(1,0)
+            is_game_over=self.check_if_move_is_valid_and_make_it(1,0)
         elif direction=='right':
-            self.check_if_move_is_valid_and_make_it(0,1)
+            is_game_over=self.check_if_move_is_valid_and_make_it(0,1)
         elif direction=='left':
-            self.check_if_move_is_valid_and_make_it(0,-1)
+            is_game_over=self.check_if_move_is_valid_and_make_it(0,-1)
+        if is_game_over=='Game over':
+            print('You have died!')
+            return 'DEAD'
 
 # check if the hero can attack by weapon and spell, not tested
     def hero_attack(self, by=""):

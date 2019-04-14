@@ -1,2 +1,2 @@
-Spear 45
-Necromans spell 15 9 5
+Spear 16
+Spear 27

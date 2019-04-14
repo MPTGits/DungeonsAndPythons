@@ -7,21 +7,21 @@ def game_loop():
     spell = Spell(name="Fireball", damage=30, mana_cost=50, cast_range=2)
     hero.learn(spell)
     dungeon.spawn(hero)
-    # game_loop(dungeon)
-    while True:
+    is_dead=False
+    while is_dead!='DEAD':
         if dungeon.get_current_level()>3:
             print('GET READY FOR A BOSS FIGHT STAGE!')
             time.sleep(100)
         dungeon.print_map()
         move=input('Input move(w/a/s/d):')
         if move=='w':
-            dungeon.move_hero('up')
+            is_dead=dungeon.move_hero('up')
         elif move=='s':
-            dungeon.move_hero('down')
+            is_dead=dungeon.move_hero('down')
         elif move=='a':
-            dungeon.move_hero('left')
+            is_dead=dungeon.move_hero('left')
         elif move=='d':
-            dungeon.move_hero('right')
+            is_dead=dungeon.move_hero('right')
         # enemy1 = dungeon.hero_attack(by="spell")
         # enemy2 = dungeon.hero_attack(by="weapon")
         # # if enemy1 is not False:

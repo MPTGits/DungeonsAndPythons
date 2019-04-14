@@ -1,9 +1,10 @@
 from random import random,randint
 from sty import fg, bg, ef, rs
 import sys
+from hero import Hero
 from treasure import Treasure
 from enemy import Enemy
-from hero import Weapon
+from weapon import Weapon
 from spell import Spell
 
 class DungeonGenerator:
@@ -118,6 +119,7 @@ class DungeonGenerator:
 #Parsing our final version of the generated dungeon to a text file
     def parse_dungeon_lst_to_file(self):
         with open(self.file_name,'w+') as f:
+            self.generate_health_pots()
             self.mark_exit_area()
             self.parse_treasures_to_file()
             self.spawn_enemies()
@@ -159,10 +161,22 @@ class DungeonGenerator:
                 random_x=randint(3,self.height-1)
                 random_y=randint(0,self.width-1)
                 if self.dungeon[random_x][random_y]=='.':
-                    f.write(str(randint(20,100))+' '+str(randint(10,50))+' '+str(randint(5,20))+' '+str(random_x)+' '+str(random_y)+'\n')
+                    health=randint(20,100)
+                    mana=randint(10,50)
+                    damage=randint(5,20)
+                    if self.height<30 and self.width<30:
+                        health=int(health/2)
+                        mana=int(mana/2)
+                        damage=int(damage/2)
+                    f.write(str(health)+' '+str(mana)+' '+str(damage)+' '+str(random_x)+' '+str(random_y)+'\n')
                     self.dungeon[random_x][random_y]='E'
                     enemies-=1
-
+#Generates pots
+    def generate_health_pots(self):
+        x=randint(0,self.height-1)
+        y=randint(0,self.width-1)
+        if self.dungeon[x][y]=='.':
+            self.dungeon[x][y]='+'
     #We save the colors used for our map in a file so we don't get a diffrent random color map when we refresh the movement
     def parse_color_file(self,color_file='color.txt'):
         with open(color_file,'w') as f:
