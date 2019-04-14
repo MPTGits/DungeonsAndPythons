@@ -69,12 +69,20 @@ class Hero:
     def learn(self, spell):
         self.spell = spell
 
+    def get_mana_regen_rate(self):
+        return self.mana_regeneration_rate
+
+    def set_mana(self,mana_added):
+        if (self.mana+mana_added)<99:
+            self.mana+=mana_added
+
     def attack(self, by = ""):
         if by == "weapon":
             return self.weapon.get_damage()
         if by == "spell" and self.spell.get_mana_cost() <= self.mana:
             self.mana-=self.spell.get_mana_cost()
             return self.spell.get_damage()
+
 
     
 # def chosen_attack(self):

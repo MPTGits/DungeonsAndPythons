@@ -1,2 +1,2 @@
-Necromans spell 9 13 5
-Knife 7
+Frostball spell 10 12 2
+Frostball spell 20 6 3

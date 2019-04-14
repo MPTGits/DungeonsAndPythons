@@ -7,6 +7,7 @@ class Fight:
     def __init__(self, hero, enemy):
         self.hero = hero
         self.enemy = enemy
+    
 
     @staticmethod
     def greater(a, b):
@@ -14,6 +15,15 @@ class Fight:
             return a
         else:
             return b
+
+    def simulate_fight(self):
+        atack_tracker=0
+        while self.hero.is_alive() and self.enemy.is_alive():
+                if atack_tracker%2==0:
+                    self.attack_by_hero()
+                else:
+                    self.attack_by_enemy()
+                atack_tracker+=1
 
     def attack_by_hero(self):
         if self.hero.can_attack_by_spell() is True:

@@ -179,13 +179,7 @@ class Dungeon:
                 if enemy[1]==x+r and enemy[2]==y+c:
                     enemy_to_fight=enemy[0]
             fight_breakout=Fight(self.my_hero,enemy_to_fight)
-            atack_tracker=0
-            while self.my_hero.is_alive() and enemy_to_fight.is_alive():
-                if atack_tracker%2==0:
-                    fight_breakout.attack_by_hero()
-                else:
-                    fight_breakout.attack_by_enemy()
-                atack_tracker+=1
+            fight_breakout.simulate_fight()
             if self.my_hero.is_alive():
                 dungeon_lst[r][c]='.'
                 dungeon_lst[r+x][c+y]='H'
@@ -212,46 +206,48 @@ class Dungeon:
         if is_game_over=='Game over':
             print('You have died!')
             return 'DEAD'
+        #Regening mana on every move
+        self.my_hero.set_mana(self.my_hero.get_mana_regen_rate())
 
-# check if the hero can attack by weapon and spell, not tested
-    def hero_attack(self, by=""):
-        if by == "weapon":
-            # if self.my_hero.can_attack_by_weapon() is False:
-            #     return False
-            for enemy in self.get_enemies():
-                if self.get_hero_positon() == self.get_enemy_position(enemy):
-                    return enemy
-            return False
-        else:
-            for enemy in self.get_enemies():
-                if self.get_hero_positon() == self.get_enemy_position(enemy):
-                    return enemy
-            cast_range = self.my_hero.spell.get_cast_range()
-            dungeon_lst = self.get_dungeon_lst()
-            rows_hero = self.hero_position[0]
-            col_hero = self.hero_position[1]
-            right = (rows_hero, col_hero + cast_range)
-            left = (rows_hero, col_hero - cast_range)
-            up = (rows_hero - cast_range, col_hero)
-            down = (rows_hero + cast_range, col_hero)
-            for enemy in self.get_enemies():
-                enemy_pos = self.get_enemy_position(enemy)
-                if enemy_pos[0] == right[0] and enemy_pos[1] <= right[1] and enemy_pos[1] >= col_hero:
-                    return enemy
-                if enemy_pos[0] == left[0] and enemy_pos[1] >= left[1] and enemy_pos[1] <= col_hero:
-                    return enemy
-                if enemy_pos[1] == up[1] and enemy_pos[0] >= up[0] and enemy_pos[0] <= rows_hero:
-                    return enemy
-                if enemy_pos[1] == down[1] and enemy_pos[0] <= down[0] and enemy_pos[0] >= rows_hero:
-                    return enemy
-            return False
+# # check if the hero can attack by weapon and spell, not tested
+#     def hero_attack(self, by=""):
+#         if by == "weapon":
+#             # if self.my_hero.can_attack_by_weapon() is False:
+#             #     return False
+#             for enemy in self.get_enemies():
+#                 if self.get_hero_positon() == self.get_enemy_position(enemy):
+#                     return enemy
+#             return False
+#         else:
+#             for enemy in self.get_enemies():
+#                 if self.get_hero_positon() == self.get_enemy_position(enemy):
+#                     return enemy
+#             cast_range = self.my_hero.spell.get_cast_range()
+#             dungeon_lst = self.get_dungeon_lst()
+#             rows_hero = self.hero_position[0]
+#             col_hero = self.hero_position[1]
+#             right = (rows_hero, col_hero + cast_range)
+#             left = (rows_hero, col_hero - cast_range)
+#             up = (rows_hero - cast_range, col_hero)
+#             down = (rows_hero + cast_range, col_hero)
+#             for enemy in self.get_enemies():
+#                 enemy_pos = self.get_enemy_position(enemy)
+#                 if enemy_pos[0] == right[0] and enemy_pos[1] <= right[1] and enemy_pos[1] >= col_hero:
+#                     return enemy
+#                 if enemy_pos[0] == left[0] and enemy_pos[1] >= left[1] and enemy_pos[1] <= col_hero:
+#                     return enemy
+#                 if enemy_pos[1] == up[1] and enemy_pos[0] >= up[0] and enemy_pos[0] <= rows_hero:
+#                     return enemy
+#                 if enemy_pos[1] == down[1] and enemy_pos[0] <= down[0] and enemy_pos[0] >= rows_hero:
+#                     return enemy
+#             return False
 
 
-    def enemy_attack(self, enemy):
-        if self.get_hero_positon() == get_enemy_position(enemy):
-            return True
-    #     else:
-            # moves closer to hero
+#     def enemy_attack(self, enemy):
+#         if self.get_hero_positon() == get_enemy_position(enemy):
+#             return True
+#     #     else:
+#             # moves closer to hero
 
 
 
