@@ -9,7 +9,7 @@ class Treasure:
         self.generate_tresures()
 
     def generate_tresures(self):
-        damage=int(randint(1,100)/(random()+1))
+        damage=int(randint(1,70)/(random()+1))
         type_wepon_or_spell=choice(("Axe","Sword","Knife","Spear","Fireball spell","Frostball spell","Blink spell","Necromans spell"))
         #Lower damage for the knife 
         if type_wepon_or_spell=='Knife':
@@ -17,7 +17,7 @@ class Treasure:
         if 'spell' in type_wepon_or_spell:
             damage=randint(5,20)
             manna_cost=randint(5,15)
-            cast_range=randint(2,5)
+            cast_range=randint(2,4)
             self.found_loot=Spell(type_wepon_or_spell,damage,manna_cost,cast_range)
         else:
             self.found_loot=Weapon(type_wepon_or_spell,damage)

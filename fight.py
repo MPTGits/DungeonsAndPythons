@@ -4,9 +4,10 @@ from weapon import Weapon
 from dungeon import *
 
 class Fight:
-    def __init__(self, hero, enemy):
+    def __init__(self, hero, enemy,dungeon):
         self.hero = hero
         self.enemy = enemy
+        self.dungeon=dungeon
     
 
     @staticmethod
@@ -16,18 +17,11 @@ class Fight:
         else:
             return b
 
-    def simulate_fight(self):
-        atack_tracker=0
-        while self.hero.is_alive() and self.enemy.is_alive():
-                if atack_tracker%2==0:
-                    self.attack_by_hero()
-                else:
-                    self.attack_by_enemy()
-                atack_tracker+=1
-
     def attack_by_hero(self):
         if self.hero.can_attack_by_spell() is True:
-            chosen_attack_damage = self.greater(self.hero.attack(by="weapon"), self.hero.attack(by="spell")) 
+            #This won't work since when you call hero.attack(by='spell') you waste mana
+            #chosen_attack_damage = self.greater(self.hero.attack(by="weapon"), self.hero.attack(by="spell"))
+            chosen_attack_damage = self.greater(self.hero.weapon.get_damage(), self.hero.spell.get_damage())
         elif self.hero.can_attack_by_weapon() is True:
             chosen_attack_damage = self.hero.weapon.get_damage()
         else:
@@ -39,6 +33,10 @@ class Fight:
             self.enemy.take_damage(chosen_attack_damage)
             print("Hero casts a " + self.hero.spell.get_name() + " ,hits enemy for " + str(chosen_attack_damage) + " dmg.")
             print("Enemy health is " + str(self.enemy.get_health()))
+        #Added this so we don't attack with a weapon from miles away
+        elif not self.dungeon.hero_attack('weapon'):
+            print('Hero cannot cast a spell and is too far to attack by weapon!')
+            return
         else:
             self.enemy.take_damage(chosen_attack_damage)
             print("Hero hits enemy with a " + self.hero.weapon.get_name() + " for " + str(chosen_attack_damage) + " dmg.")

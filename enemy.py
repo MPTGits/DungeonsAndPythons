@@ -50,6 +50,6 @@ class Enemy:
             self.health=max(0,self.health-damage_taken)
 
     def __eq__(self,other):
-        return self.health==other.health and self.mana==other.mana and self.damage==other.damage
+        return self.__dict__==other.__dict__
 
 

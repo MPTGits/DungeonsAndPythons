@@ -1,2 +1,2 @@
-Frostball spell 10 12 2
-Frostball spell 20 6 3
+Axe 2
+Axe 35
