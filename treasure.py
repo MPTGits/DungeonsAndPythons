@@ -10,7 +10,7 @@ class Treasure:
 
     def generate_tresures(self):
         damage=int(randint(1,70)/(random()+1))
-        type_wepon_or_spell=choice(("Axe","Sword","Knife","Spear","Fireball spell","Frostball spell","Blink spell","Necromans spell"))
+        type_wepon_or_spell=choice(("Axe","Sword","Knife","Spear","Fireball(spell)","Frostball(spell)","Blink(spell)","Val'kyr(spell)"))
         #Lower damage for the knife 
         if type_wepon_or_spell=='Knife':
             damage=int(randint(1,60)//(random()+1))

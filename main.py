@@ -1,15 +1,19 @@
 from dungeon import *
+from sty import fg, bg, ef, rs
 
 def game_loop():
     DungeonGenerator(20,20,'lvl.txt')
     dungeon = Dungeon('lvl.txt')
-    hero = Hero('Marto', 'The God', 99, 99,5)
-    spell = Spell(name="Fireball", damage=30, mana_cost=50, cast_range=3)
+    print(fg(9)+ef.blink+'Hello player,welcome to dungeon and pythons!'+rs.blink+rs.fg)
+    hero_name=input('Insert your heros name:')
+    hero_known_as=input('How do you want your hero to be known as:')
+    print(fg(9)+'Let your adventure begin '+hero_name+' the '+ hero_known_as+',here,you can have a Fireball spell and Axe of Anger,although I doubt they will help!')
+    hero = Hero(hero_name, hero_known_as, 99, 99,5)
+    spell = Spell(name="Fireball", damage=15, mana_cost=50, cast_range=2)
     weapon = Weapon(name='Axe of Anger',damage=10)
     hero.equip(weapon)
     hero.learn(spell)
     dungeon.spawn(hero)
-    print(hero.can_attack_by_weapon(),hero.can_attack_by_spell())
     while True:
         if dungeon.get_current_level()>3:
             print('GET READY FOR A BOSS FIGHT STAGE!')
@@ -48,7 +52,7 @@ def game_loop():
                 if dungeon.enemy_attack(enemy) is True:
                     fight.attack_by_enemy()
                 else:
-                    #print('Enemy moves')
+                    pass#print('Enemy moves')
                     #Implemented this just to test things out it only works if hero starts to attack enemy from above
                     #(Delet this when you do the move method!)
                     #dungeon.set_enemy_position(enemy,dungeon.get_enemy_position(enemy)[0]-1,dungeon.get_enemy_position(enemy)[1])

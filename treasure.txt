@@ -1,2 +1,2 @@
-Axe 2
-Axe 35
+Val'kyr(spell) 12 5 4
+Fireball(spell) 9 7 2

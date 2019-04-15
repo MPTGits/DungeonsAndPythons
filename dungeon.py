@@ -45,7 +45,7 @@ class Dungeon:
             for line in f:
                 gift=line.split(' ')
                 if len(gift)>3:
-                    self.treasure_list.append(Spell(gift[0],int(gift[2]),int(gift[3]),int(gift[4])))
+                    self.treasure_list.append(Spell(gift[0],int(gift[1]),int(gift[2]),int(gift[3])))
                 else:
                     self.treasure_list.append(Weapon(gift[0],int(gift[1])))
 #saving enemise to the list as a list (enemy,x cordinate,ycordinate)
@@ -199,7 +199,6 @@ class Dungeon:
         elif direction=='left':
             self.check_if_move_is_valid_and_make_it(0,-1)
         self.my_hero.set_mana(self.my_hero.get_mana_regen_rate())
-        print(self.my_hero.get_mana())
 
 # check if the hero can attack by weapon and spell, not tested
     def hero_attack(self, by=""):
