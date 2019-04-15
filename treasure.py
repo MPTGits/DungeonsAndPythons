@@ -8,6 +8,9 @@ class Treasure:
         self.found_loot=None
         self.generate_tresures()
 
+    def __str__(self):
+        return self.found_loot.get_name()
+
     def generate_tresures(self):
         damage=int(randint(1,70)/(random()+1))
         type_wepon_or_spell=choice(("Axe","Sword","Knife","Spear","Fireball(spell)","Frostball(spell)","Blink(spell)","Val'kyr(spell)"))
@@ -16,7 +19,7 @@ class Treasure:
             damage=int(randint(1,60)//(random()+1))
         if 'spell' in type_wepon_or_spell:
             damage=randint(5,20)
-            manna_cost=randint(5,15)
+            manna_cost=randint(15,35)
             cast_range=randint(2,4)
             self.found_loot=Spell(type_wepon_or_spell,damage,manna_cost,cast_range)
         else:
@@ -25,5 +28,3 @@ class Treasure:
     def found_loot_obj(self):
         return self.found_loot
 
-    def __str__(self):
-        return self.found_loot.get_name()

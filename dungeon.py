@@ -69,7 +69,7 @@ class Dungeon:
         return enemy_list
 
 
-
+    #Setter for enemy possition
     def set_enemy_position(self,enemy_char,new_x_poss,new_y_poss):
         dungeon_lst=self.get_dungeon_lst()
         for idx in range(len(self.enemies_list)):

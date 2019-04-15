@@ -1,2 +1,2 @@
-Val'kyr(spell) 12 5 4
-Fireball(spell) 9 7 2
+Blink(spell) 20 35 3
+Val'kyr(spell) 14 32 2

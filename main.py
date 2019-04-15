@@ -7,7 +7,7 @@ def game_loop():
     print(fg(9)+ef.blink+'Hello player,welcome to dungeon and pythons!'+rs.blink+rs.fg)
     hero_name=input('Insert your heros name:')
     hero_known_as=input('How do you want your hero to be known as:')
-    print(fg(9)+'Let your adventure begin '+hero_name+' the '+ hero_known_as+',here,you can have a Fireball spell and Axe of Anger,although I doubt they will help!')
+    print(fg(9)+'Let your adventure begin{} the {},here,you can have a Fireball spell and Axe of Anger,although I doubt they will help!'.format(hero_name,hero_known_as))
     hero = Hero(hero_name, hero_known_as, 99, 99,5)
     spell = Spell(name="Fireball", damage=15, mana_cost=50, cast_range=2)
     weapon = Weapon(name='Axe of Anger',damage=10)

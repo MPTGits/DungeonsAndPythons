@@ -3,6 +3,8 @@ from spell import Spell
 
 class Hero:
     def __init__(self, name, title, health, mana, mana_regeneration_rate):
+        if health<0 or mana<0 or mana_regeneration_rate<0:
+            raise Exception("Your enemy cannot have neggative attributes!")
         self.name = name
         self.title = title
         self.health = health
