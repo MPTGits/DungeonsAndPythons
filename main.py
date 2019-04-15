@@ -27,22 +27,21 @@ def game_loop():
         elif move=='a':
             dungeon.move_hero('left')
         elif move=='d':
-                dungeon.move_hero('right')
+            dungeon.move_hero('right')
         enemy1 = dungeon.hero_attack(by="spell")
         enemy2 = dungeon.hero_attack(by="weapon")
+        # check_weapon = False
         # if enemy1 is not False:
         #     print(dungeon.get_enemy_position(enemy1))
         #     dungeon.move_enemy('up')
         if enemy1 is False and enemy2 is False:
             continue
         if enemy2 is False:
-            fight = Fight(hero, enemy1,dungeon)
+            fight = Fight(hero, enemy1, dungeon)
             enemy = enemy1
-            # fight.start()
         else:
-            fight = Fight(hero, enemy2,dungeon)
+            fight = Fight(hero, enemy2, dungeon)
             enemy = enemy2
-            # fight.start()
         helper = False
         while enemy.is_alive() is True and hero.is_alive() is True:
             if helper is False:
@@ -52,15 +51,18 @@ def game_loop():
                 if dungeon.enemy_attack(enemy) is True:
                     fight.attack_by_enemy()
                 else:
-                    pass#print('Enemy moves')
-                    #Implemented this just to test things out it only works if hero starts to attack enemy from above
-                    #(Delet this when you do the move method!)
-                    #dungeon.set_enemy_position(enemy,dungeon.get_enemy_position(enemy)[0]-1,dungeon.get_enemy_position(enemy)[1])
+                    print('Enemy moves')
+                    dungeon.move_enemy(enemy)
+                    dungeon.print_map()
+                    time.sleep(2)
                 helper = False
         if enemy.is_alive() is False:
             enemy_x=dungeon.get_enemy_position(enemy)[0]
             enemy_y=dungeon.get_enemy_position(enemy)[1]
             dungeon.kill_enemy(enemy,enemy_x,enemy_y)
+        if hero.is_alive() is False:
+            print(fg(9)+ef.blink+'LOSER!'+rs.blink+rs.fg)
+            break
 
 
 
@@ -73,10 +75,4 @@ def main():
 
 main()
 
-#game_loop()
 
-# TO DO
-# move enemy
-# to be able to step on enemy's position in order to fight with a weapon
-#add mana on every step
-# put attacks in different methods

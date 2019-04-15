@@ -177,7 +177,7 @@ class Dungeon:
                     self.my_hero.equip(found_item)
                 else:
                     self.my_hero.learn(found_item)
-                time.sleep(5)
+                time.sleep(1)
             elif dungeon_lst[r+x][c+y]=='+':
                 potion=HealthPotion(randint(5,15))
                 print('Hero has reseved a heal of',potion.get_restored_health(),'HP')
@@ -200,7 +200,23 @@ class Dungeon:
             self.check_if_move_is_valid_and_make_it(0,-1)
         self.my_hero.set_mana(self.my_hero.get_mana_regen_rate())
 
-# check if the hero can attack by weapon and spell, not tested
+    def move_enemy(self, enemy):
+        enemy_pos = self.get_enemy_position(enemy)
+        r, c = self.hero_position
+        if enemy_pos[0] == r and enemy_pos[1] < c:
+            self.set_enemy_position(enemy, enemy_pos[0], enemy_pos[1] + 1)
+        elif enemy_pos[0] == r and enemy_pos[1] > c:
+            self.set_enemy_position(enemy, enemy_pos[0], enemy_pos[1] - 1)
+        elif enemy_pos[1] == c and enemy_pos[0] < r:
+            self.set_enemy_position(enemy, enemy_pos[0] + 1, enemy_pos[1])
+        elif enemy_pos[1] == c and enemy_pos[0] > r:
+            self.set_enemy_position(enemy, enemy_pos[0] - 1, enemy_pos[1])
+
+    def hero_can_attack_by_weapon(self, enemy):
+        if self.hero_position == self.get_enemy_position(enemy):
+            return True
+        return False
+
     def hero_attack(self, by=""):
         if by == "weapon":
             if self.my_hero.can_attack_by_weapon() is False:
@@ -215,7 +231,6 @@ class Dungeon:
                 if self.get_hero_position() == self.get_enemy_position(enemy):
                     return enemy
             cast_range = self.my_hero.spell.get_cast_range()
-            dungeon_lst = self.get_dungeon_lst()
             rows_hero = self.hero_position[0]
             col_hero = self.hero_position[1]
             right = (rows_hero, col_hero + cast_range)
@@ -238,48 +253,5 @@ class Dungeon:
     def enemy_attack(self, enemy):
         if self.get_hero_position() == self.get_enemy_position(enemy):
             return True
-    #     else:
-            # moves closer to hero
+        return False
 
-
-
-#This is the way to save our dungeon to a file with our dungeon generator(by only calling the class with height and width of map and a file
-#to save it to
-# DungeonGenerator(37,60,'lvl.txt')
-# view=Dungeon('lvl.txt')
-# me=Hero('Marto', 'The God', 99, 99,5)
-# view.spawn(me)
-# view.game_loop()
-
-# # view.game_loop()
-
-
-#     def game_loop(dungeon):
-#         while True:
-#             move=input('Input move(w/a/s/d):')
-#             if move=='w':
-#                 dungeon.move_hero('up')
-#             elif move=='s':
-#                 dungeon.move_hero('down')
-#             elif move=='a':
-#                 dungeon.move_hero('left')
-#             elif move=='d':
-#                 dungeon.move_hero('right')
-#             dungeon.print_map()
-    #         view.get_hero_position()
-    #         print("something")
-    #         for enemy in view.get_enemies():
-    # # print(enemy)
-    #             print(view.get_enemy_position(enemy))
-
-
-
-# #while True:
-#     #pick=choice(('left','right','up','down'))
-#     #view.move_hero(pick)
-# # view.move_hero('down')
-# # view.move_hero('down')
-# # view.move_hero('down')
-# # view.move_hero('down')
-# for x in range(5):
-#     view.move_hero('right')

@@ -7,7 +7,7 @@ class Fight:
     def __init__(self, hero, enemy,dungeon):
         self.hero = hero
         self.enemy = enemy
-        self.dungeon=dungeon
+        self.dungeon = dungeon
     
 
     @staticmethod
@@ -18,12 +18,14 @@ class Fight:
             return b
 
     def attack_by_hero(self):
-        if self.hero.can_attack_by_spell() is True:
-            #This won't work since when you call hero.attack(by='spell') you waste mana
+        check_weapon = self.dungeon.hero_can_attack_by_weapon(self.enemy)
+        if self.hero.can_attack_by_spell() is True and self.hero.can_attack_by_weapon() is True and check_weapon is True:
             #chosen_attack_damage = self.greater(self.hero.attack(by="weapon"), self.hero.attack(by="spell"))
             chosen_attack_damage = self.greater(self.hero.weapon.get_damage(), self.hero.spell.get_damage())
-        elif self.hero.can_attack_by_weapon() is True:
+        elif self.hero.can_attack_by_weapon() is True and check_weapon is True:
             chosen_attack_damage = self.hero.weapon.get_damage()
+        elif self.hero.can_attack_by_spell() is True:
+            chosen_attack_damage = self.hero.spell.get_damage()
         else:
             chosen_attack_damage = 0
         if chosen_attack_damage == 0:
@@ -48,12 +50,5 @@ class Fight:
         print("Hero health is " + str(self.hero.get_health()))
 
 
-# enemy = Enemy(health=100, mana=100, damage=20)
-# h = Hero(name="Bron", title="Dragonslayer", health=100, mana=100, mana_regeneration_rate=2)
-# w = Weapon(name="The Axe of Destiny", damage=20)
-# h.equip(w)
-# fight = Fight(h, enemy)
-# fight.attack_by_hero()
-# fight.attack_by_enemy()
 
 
