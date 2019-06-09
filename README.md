@@ -1,6 +1,6 @@
 # DungeonsAndPythons
 HackBulgariaProject
-<h3>An RPG dungeon console game<h3>
+<h3>An RPG dungeon console game</h3>
   <p><b>To play the game run 'python3 main.py' in console.</b></p>
   <ul>
     <li>Boss level isn't done yet but the dungeond generatorfor the boss levle is complete.</li>
