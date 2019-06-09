@@ -1,11 +1,11 @@
 from random import random,randint
 from sty import fg, bg, ef, rs
 import sys
-from hero import Hero
-from treasure import Treasure
-from enemy import Enemy
-from weapon import Weapon
-from spell import Spell
+from Charecters.hero import Hero
+from Charecters.enemy import Enemy
+from Items.treasure import Treasure
+from Items.weapon import Weapon
+from Items.spell import Spell
 
 class DungeonGenerator:
 

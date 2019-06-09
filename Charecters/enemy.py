@@ -1,5 +1,5 @@
 import random
-from random_name_generator import *
+from .random_name_generator import *
 #Random name generrator for enemy mobs 
 
 

@@ -1,4 +1,4 @@
-from fighting_item import FightingItem
+from .fighting_item import FightingItem
 
 class Weapon(FightingItem):
     def __init__(self, name, damage):

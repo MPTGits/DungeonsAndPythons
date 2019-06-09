@@ -1,16 +1,18 @@
 from random import random,randint,choice
-from sty import fg, bg, ef, rs
-import sys
-from hero import Hero
-from treasure import Treasure
-from enemy import Enemy
-from hero import Weapon
-from spell import Spell
-from health_potion import HealthPotion
-from random import randint,choice
+from sty import fg, bg, ef, rs 
 import time
-from dungeon_generator import DungeonGenerator
-from fight import Fight
+import sys
+from Charecters.hero import Hero
+from Charecters.enemy import Enemy
+from Items.treasure import Treasure
+from Items.spell import Spell
+from Items.fighting_item import FightingItem
+from Items.weapon import Weapon
+from Items.health_potion import HealthPotion
+from Items.fight import Fight
+from random import randint,choice
+from Dungeon.dungeon_generator import DungeonGenerator
+
 
 
 class Dungeon:

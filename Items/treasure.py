@@ -1,6 +1,6 @@
-from hero import Weapon
 from random import choice,randint,random
-from spell import Spell
+from .weapon import Weapon
+from .spell import Spell
 
 class Treasure:
 

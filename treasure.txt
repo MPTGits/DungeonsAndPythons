@@ -1,2 +1,2 @@
-Blink(spell) 20 35 3
-Val'kyr(spell) 14 32 2
+Sword 3
+Axe 27

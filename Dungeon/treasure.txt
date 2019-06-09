@@ -1,0 +1,2 @@
+Fireball(spell) 16 18 3
+Frostball(spell) 5 35 4

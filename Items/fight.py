@@ -1,7 +1,7 @@
-from hero import Hero
-from enemy import Enemy
-from weapon import Weapon
-from dungeon import *
+from Charecters.hero import Hero
+from Charecters.enemy import Enemy
+from .weapon import Weapon
+from Dungeon.dungeon import *
 
 class Fight:
     def __init__(self, hero, enemy,dungeon):
