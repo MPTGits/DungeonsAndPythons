@@ -66,7 +66,6 @@ def game_loop():
             break
 
 
-
 def main():
     DungeonGenerator(37,60,'lvl.txt')
     view=Dungeon('lvl.txt')
@@ -74,6 +73,7 @@ def main():
     view.spawn(me)
     game_loop()
 
-main()
+if __name__ == '__main__':
+    main()
 
 
